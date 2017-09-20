@@ -1,6 +1,6 @@
 # alphat-fork
-Forked version of LineAlphat JS (Selfbot)
-<br>His project -> https://github.com/alfathdirk/LineAlphatJS
+Forked version of LineAlphat JS (Selfbot) #DEV
+<br>His project -> https://github.com/alfathdirk/LineAlphatJS<br><br>Status: Dalam pengembangan
 
 <hr>
 
