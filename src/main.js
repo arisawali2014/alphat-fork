@@ -2,9 +2,9 @@ const LineAPI = require('./api');
 const { Message, OpType, Location } = require('../curve-thrift/line_types');
 let exec = require('child_process').exec;
 
-const myBot = ['u5ee3f8b1c2783990512a02c14d312c89','u02a0665c44d3fa83e0864ef91ea76f8d','u5a20e49a9918a96267ae41c0e13cd1c3'];
-var vx = {};
-var waitMsg = "no";
+const myBot = ['YOUR MID HERE'];//INPUT YOUR MID HERE TO BE ADMIN OF BOT
+var vx = {};//DO NOT CHANGE THIS !
+var waitMsg = "no";//DO NOT CHANGE THIS !
 var msgText = "Bro.... ini tes, jangan dibales !";
 
 function isAdminOrBot(param) {
@@ -17,9 +17,9 @@ class LINE extends LineAPI {
         this.receiverID = '';
         this.checkReader = [];
         this.stateStatus = {
-            cancel: 0,
-            kick: 0,
-			salam: 1
+            cancel: 0, //0 = false, 1 = true
+            kick: 0,//0 = false, 1 = true
+	    salam: 1//0 = false, 1 = true
         }
     }
 
@@ -49,6 +49,7 @@ class LINE extends LineAPI {
         }
 		
 		if(operation.type == 16 && this.stateStatus.salam == 1){//join group
+			//if bot joined group, the bot will greeting to the group
 			let halo = new Message();
 			halo.to = operation.param1;
 			halo.text = "Halo, Salam Kenal ^_^ !";
@@ -56,6 +57,7 @@ class LINE extends LineAPI {
 		}
 		
 		if(operation.type == 17 && this.stateStatus.salam == 1){//ada yang join
+			//when ever someone join your group, and then this bot will greeting the new member on the group
 			let seq = new Message();
 			seq.to = operation.param1;
 			this.textMessage("0101",seq,operation.param2);
