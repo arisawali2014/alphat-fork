@@ -24,6 +24,10 @@ Still work :construction_worker:
 - Fix Some Bug
 - Improve API
 
+CMD / KEYWORD
+------
+**SEE main.js for the keyword**
+
 Author
 ------
 [@alfathdirk](https://instagram.com/alfathdirk)
