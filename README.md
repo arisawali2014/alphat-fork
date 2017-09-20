@@ -1,5 +1,6 @@
 # alphat-fork
 Fork Version Of LineAlphat JS (Selfbot)
+His project -> https://github.com/alfathdirk/LineAlphatJS
 
 <hr>
 
@@ -11,17 +12,21 @@ check your nodejs version
 
 How to run ?
 ------
-- `git clone https://github.com/alfathdirk/LineAlphatJS.git`
-- `cd LineAlphatJS && npm install`
+- `git clone https://github.com/GoogleX133/alphat-fork.git`
+- `cd alphat-fork && npm install`
 - `npm start`
 
 
 Still work :construction_worker:
 ----
-**TODO** features
-- Implement All 
-- Improve logic
+**ADDED** features
+- Fix Some Bug
+- Improve API
 
 Author
 ------
 [@alfathdirk](https://instagram.com/alfathdirk)
+
+Me
+------
+[@GoogleX](https://fb.me/m.rakha.f)
