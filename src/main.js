@@ -40,7 +40,6 @@ class LINE extends LineAPI {
             this.receiverID = message.to = (operation.message.to === myBot[0]) ? operation.message.from : operation.message.to ;
             Object.assign(message,{ ct: operation.createdTime.toString() });
             if(waitMsg == "yes" && operation.message.from == vx[0]){
-				console.info("Wait MSG");
 				this.textMessage(txt,message,message.text)
 			}else{this.textMessage(txt,message)}
         }
@@ -271,7 +270,7 @@ class LINE extends LineAPI {
 				this._sendMessage(seq,"Perintah dibatalkan !\n#No Command Found !");
 			}
 		}
-		if(txt == "!set" && isAdminOrBot(seq.from)){
+		if(txt == "!set" && isAdminOrBot(seq.from)){//#DEV || #BETA
 			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
 			    waitMsg = "yes";
 			    vx[0] = seq.from;vx[1] = txt;vx[2] = "arg1";
@@ -287,9 +286,7 @@ class LINE extends LineAPI {
 				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 				this._sendMessage(seq,"# CANCELLED");
 			}else if(vx[2] == "arg1" && !cox[1]){
-				console.info("masuk");
 				    let orangnya = await this._getContacts([txt]);
-				    console.info(orangnya);
 				    seq.text = 
 "Nama: "+orangnya[0].displayName+"\n\
 ID: \n"+orangnya[0].mid+"\n\
@@ -302,7 +299,7 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 				    this._sendMessage(seq,seq.text);
 			}
 		}
-		if(txt == "!kepo"){
+		if(txt == "!kepo"){//CMD -> !kepo
 			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
 			    waitMsg = "yes";
 			    vx[0] = seq.from;vx[1] = txt;vx[2] = "arg1";
@@ -324,7 +321,7 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 		    console.info(orangnya);
 		}*/
 		
-		if(com[0] == "msg" && isAdminOrBot(seq.from)){
+		if(com[0] == "msg" && isAdminOrBot(seq.from)){//CMD -> msg:name
 			if(com[1] == null || typeof com[1] === "undefined" || !com[1]){
 				this._sendMessage(seq,"Mau kirim pesan ke siapa bos ?");
 			}else{
@@ -341,7 +338,7 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
             this.cancelAll(seq.to);
         }*/
 
-        if(txt == 'halo' || txt == 'sya') {
+        if(txt == 'halo' || txt == 'sya') {//CMD -> halo
             this._sendMessage(seq, 'halo disini tasya :)');
         }
 		
@@ -360,29 +357,28 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 			}
 		}else if(cox[0] == "set" && !isAdminOrBot(seq.from)){this._sendMessage(seq,"Not permitted !");}*/
 		
-		if(com[0] == "kick" && isAdminOrBot(seq.from) && seq.toType == 2){
+		if(com[0] == "kick" && isAdminOrBot(seq.from) && seq.toType == 2){//CMD -> kick:mid
 			if(com[1] == null || typeof com[1] === "undefined" || !com[1]){
 				this._sendMessage(seq,"Mau kick siapa bos ?");
 			}else{this._kickMember(seq.to,[com[1]]);}
 		}else if(com[0] == "kick" && !isAdminOrBot(seq.from) && seq.toType == 2){this._sendMessage(seq,"Not permitted !");}
 		
-		if(txt == "kickme" && seq.toType == 2){
+		if(txt == "kickme" && seq.toType == 2){//CMD -> kickme
 			this._sendMessage(seq,"Ok bos !");
 			this._kickMember(seq.to,[seq.from]);
 		}
 		
-		if(com[0] == "invite" && isAdminOrBot(seq.from) && seq.toType == 2){
+		if(com[0] == "invite" && isAdminOrBot(seq.from) && seq.toType == 2){//CMD -> invite:mid
 			if(com[1] == null || typeof com[1] === "undefined" || !com[1]){
 				this._sendMessage(seq,"Mau invite siapa bos ?");
 			}else{this._invite(seq.to,[com[1]]);}
 		}else if(com[0] == "invite" && !isAdminOrBot(seq.from) && seq.toType == 2){this._sendMessage(seq,"Not permitted !");}
 		
-		if(com[0] == "kepo" && isAdminOrBot(seq.from)){
+		if(com[0] == "kepo" && isAdminOrBot(seq.from)){//CMD -> kepo:mid
 			if(com[1] == null || typeof com[1] === "undefined" || !com[1]){
 				this._sendMessage(seq,"Kepo sama siapa ?");
 			}else{
 				let orangnya = await this._getContacts([com[1]]);
-				console.info(orangnya);
 				seq.text = 
 "Nama: "+orangnya[0].displayName+"\n\
 ID: "+orangnya[0].mid+"\n\
@@ -395,7 +391,7 @@ Status: \n"+orangnya[0].statusMessage+"\n\
 			}
 		}else if(com[0] == "kepo" && !isAdminOrBot(seq.from)){this._sendMessage(seq,"Not permitted !");}
 
-        if(txt == 'speed') {
+        if(txt == 'speed') {//CMD -> speed
             const curTime = Math.floor(Date.now() / 1000);
             //this._sendMessage(seq,'processing....');
             const rtime = Math.floor(Date.now() / 1000) - curTime;
@@ -408,7 +404,7 @@ Status: \n"+orangnya[0].statusMessage+"\n\
             })
         }*/
 
-        if(txt === 'kickall' && this.stateStatus.kick == 1 && isAdminOrBot(seq.from) && seq.toType == 2) {
+        if(txt === 'kickall' && this.stateStatus.kick == 1 && isAdminOrBot(seq.from) && seq.toType == 2) {//CMD -> kickall
             let { listMember } = await this.searchGroup(seq.to);
             for (var i = 0; i < listMember.length; i++) {
                 if(!isAdminOrBot(listMember[i].mid)){
@@ -417,7 +413,7 @@ Status: \n"+orangnya[0].statusMessage+"\n\
             }
         }
 		
-		if(com[0] == "tag" && isAdminOrBot(seq.from) && seq.toType == 2){
+		if(com[0] == "tag" && isAdminOrBot(seq.from) && seq.toType == 2){//CMD -> tag:mid
 			if(com[1] == null || typeof com[1] === "undefined" || !com[1]){
 				this._sendMessage(seq,"Mau tag siapa ?");
 			}else{
@@ -447,7 +443,6 @@ Status: \n"+orangnya[0].statusMessage+"\n\
 			if(com[1] == null || typeof com[1] === "undefined" || !com[1]){
 				this._sendMessage(seq,"Mau tag siapa ?");
 			}else{
-				console.info("room");
 				let { listMemberr } = await this.searchRoom(seq.to);
                 for (var i = 0; i < listMemberr.length; i++) {
                     if(listMemberr[i].dn==com[1]){
@@ -532,11 +527,11 @@ Status: \n"+orangnya[0].statusMessage+"\n\
             this.setState(seq)
         }
 	
-        if(txt == 'myid' /*|| txt == 'mid' || txt == 'id'*/) {
+        if(txt == 'myid' /*|| txt == 'mid' || txt == 'id'*/) {//CMD -> myid
             this._sendMessage(seq,"ID Kamu: "+seq.from);
         }
 
-        if(txt == 'speedtest' && isAdminOrBot(seq.from)) {
+        if(txt == 'speedtest' && isAdminOrBot(seq.from)) {//CMD -> speedtest
             exec('speedtest-cli --server 6581',(err, res) => {
                     this._sendMessage(seq,res)
             })
