@@ -19,7 +19,7 @@ How to run ?
 
 Still work :construction_worker:
 ----
-**ADDED** features
+**CHANGELOG**
 - Fix Some Bug
 - Improve API
 
