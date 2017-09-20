@@ -10,10 +10,11 @@ check your nodejs version
 [upgrade nodejs](https://google.com/)
 
 
-How to run ?
+How to ?
 ------
 - `git clone https://github.com/GoogleX133/alphat-fork.git`
 - `cd alphat-fork && npm install`
+- `insert your admin mid in main.js`
 - `npm start`
 
 
