@@ -35,7 +35,6 @@ class LINE extends LineAPI {
 
     poll(operation) {
         if(operation.type == 25 || operation.type == 26) {
-			console.info(operation.message);
             const txt = (operation.message.text !== '' && operation.message.text != null ) ? operation.message.text : '' ;
             let message = new Message(operation.message);
             this.receiverID = message.to = (operation.message.to === myBot[0]) ? operation.message.from : operation.message.to ;
@@ -50,8 +49,6 @@ class LINE extends LineAPI {
             this.cancelAll(operation.param1);
         }
 		
-		if(operation.type == 43 || operation.type == 24 || operation.type == 15 || operation.type == 21){console.info(operation);}
-		
 		if(operation.type == 16 && this.stateStatus.salam == 1){//join group
 			let halo = new Message();
 			halo.to = operation.param1;
@@ -62,15 +59,10 @@ class LINE extends LineAPI {
 		if(operation.type == 17 && this.stateStatus.salam == 1){//ada yang join
 			let seq = new Message();
 			seq.to = operation.param1;
-			//halo.siapa = operation.param2;
 			this.textMessage("0101",seq,operation.param2);
-			//this._client.sendMessage(0, halo);
 		}
 
         if(operation.type == 19) { //ada kick
-            // op1 = group nya
-            // op2 = yang 'nge' kick
-            // op3 = yang 'di' kick
 			let kasihtau = new Message();
 			kasihtau.to = operation.param1;
 			kasihtau.toType = 2;
@@ -96,7 +88,6 @@ class LINE extends LineAPI {
 
         if(operation.type == 55){ //ada reader
 
-		    console.info(operation);
             const idx = this.checkReader.findIndex((v) => {
                 if(v.group == operation.param1) {
                     return v
@@ -264,10 +255,9 @@ class LINE extends LineAPI {
         const messageID = seq.id;
 		const com = textMessages.split(':');
 		const cox = textMessages.split(' ');
-		//console.info(vx.from);
+		
 		if(vx[1] == "!set" && seq.from == vx[0] && waitMsg == "yes"){
-			console.info("a");//waitMsg = "no";
-			//let vvx = vx[1];let vvxx = vx[0];//vx[0] = "";vx[1] = "";
+			console.info("a");
 			if(vx[2] == "arg1" && txt == "cancel"){
 				vx[0] = "";vx[1] = "";waitMsg = "no";
 				this._sendMessage(seq,"Perintah dibatalkan !");
@@ -280,7 +270,6 @@ class LINE extends LineAPI {
 				waitMsg = "no";vx[0] = "";vx[1] = "";vx[2] = "";vx[3] = "";
 				this._sendMessage(seq,"Perintah dibatalkan !\n#No Command Found !");
 			}
-			//this._sendMessage(seq,"# "+vvx+" to "+param);
 		}
 		if(txt == "!set" && isAdminOrBot(seq.from)){
 			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
@@ -294,9 +283,6 @@ class LINE extends LineAPI {
 		}else if(txt == "!set" && !isAdminOrBot(seq.from)){this._sendMessage(seq,"Not permitted !");}
 		
 		if(vx[1] == "!kepo" && seq.from == vx[0] && waitMsg == "yes"){
-			//vx[3] = txt;
-			//console.info(vx[3]);//waitMsg = "no";
-			//let vvx = vx[1];let vvxx = vx[0];//vx[0] = "";vx[1] = "";
 			if(txt == "cancel"){
 				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 				this._sendMessage(seq,"# CANCELLED");
@@ -315,7 +301,6 @@ Status: \n"+orangnya[0].statusMessage+"\n\
 vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 				    this._sendMessage(seq,seq.text);
 			}
-			//this._sendMessage(seq,"# "+vvx+" to "+param);
 		}
 		if(txt == "!kepo"){
 			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
@@ -339,22 +324,15 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 		    console.info(orangnya);
 		}*/
 		
-		if(txt == "1123"){
-			let orangnya = await this._client.getAllContactIds();
-			console.info(orangnya);
-		}
-		
 		if(com[0] == "msg" && isAdminOrBot(seq.from)){
 			if(com[1] == null || typeof com[1] === "undefined" || !com[1]){
 				this._sendMessage(seq,"Mau kirim pesan ke siapa bos ?");
 			}else{
 				let friendList = await this._client.getAllContactIds();
-				//console.info(friendList);
 				let orangnya = await this.matchPeople(friendList, com[1]);
 				if(!orangnya){this._sendMessage(seq,"Saya gak kenal sama dia bos ...");}else{
-					console.info("masuk");
 					seq.to = orangnya[0].mid;
-					this._sendMessage(seq,bcText);
+					this._sendMessage(seq,msgText);
 				}
 			}
 		}else if(com[0] == "msg" && !isAdminOrBot(seq.from)){this._sendMessage(seq,"Not permitted !");}
@@ -522,40 +500,6 @@ Status: \n"+orangnya[0].statusMessage+"\n\
                 }
             }
         }
-		
-		/*if(txt == "banner"){
-			let banner = new Message();
-			banner.from = seq.from;
-			banner.to = seq.to;
-			banner.toType = 2;
-			banner.id = seq.id;
-			banner.text = null;
-			banner.location = null;
-			banner.hasContent = false;
-			seq.text = null;
-			seq.contentType = 17;
-			//banner.contentPreview = null;
-			const tags = {cmddata: { SPEC_REV: '1',
-				NOTIFICATION_DISABLED: 'true',
-                BOT_richId: '2626133',
-				DOWNLOAD_URL: 'https://s3-forums-photos.tribot.org/monthly_2016_04/1424257eb83d76a6.jpg.8a8eb21716a36dbf9f0cc1b681fd6ca8.jpg',
-			    PUBLIC: 'true',
-                ALT_TEXT: 'Gambar cewe bugil !',
-				BOT_richTemplateType: '1',
-				MARKUP_JSON: '{"canvas":{"width":1040,"height":1040,"initialScene":"initialScene"},"images":{"img":{"x":0,"y":0,"w":1040,"h":1040}},"scenes":{"initialScene":{"draws":[{"image":"img","type":"image","src":"img","x":0,"y":0,"w":1040,"h":1040}],"listeners":[{"type":"touch","action":"A","params":[0.0,0.0,1040.0,1040.0]}]}},"actions":{"A":{"type":"web","text":"","params":{"linkUri":"https://s3-forums-photos.tribot.org/monthly_2016_04/1424257eb83d76a6.jpg.8a8eb21716a36dbf9f0cc1b681fd6ca8.jpg"}}}}' }}
-			seq.contentMetadata = {
-				SPEC_REV: '1',
-				NOTIFICATION_DISABLED: 'true',
-                BOT_richId: '2626133',
-				DOWNLOAD_URL: 'https://s3-forums-photos.tribot.org/monthly_2016_04/1424257eb83d76a6.jpg.8a8eb21716a36dbf9f0cc1b681fd6ca8.jpg',
-			    PUBLIC: 'true',
-                ALT_TEXT: 'Gambar cewe bugil !',
-				BOT_richTemplateType: '1',
-				MARKUP_JSON: '{"canvas":{"width":1040,"height":1040,"initialScene":"initialScene"},"images":{"img":{"x":0,"y":0,"w":1040,"h":1040}},"scenes":{"initialScene":{"draws":[{"image":"img","type":"image","src":"img","x":0,"y":0,"w":1040,"h":1040}],"listeners":[{"type":"touch","action":"A","params":[0.0,0.0,1040.0,1040.0]}]}},"actions":{"A":{"type":"web","text":"","params":{"linkUri":"https://s3-forums-photos.tribot.org/monthly_2016_04/1424257eb83d76a6.jpg.8a8eb21716a36dbf9f0cc1b681fd6ca8.jpg"}}}}'
-			}
-			seq.contentMetadata = tags.cmddata;
-			this._client.sendMessage(0, seq);
-		}*/
 
         /*if(txt == 'setpoint') {
             this._sendMessage(seq, `Setpoint for check reader.`);
