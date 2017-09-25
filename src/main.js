@@ -2,12 +2,11 @@ const LineAPI = require('./api');
 const { Message, OpType, Location } = require('../curve-thrift/line_types');
 let exec = require('child_process').exec;
 
-const myBot = [/*'uc3d0b63cc7985fd34c7ba93e357332e5',*/'u5ee3f8b1c2783990512a02c14d312c89','u02a0665c44d3fa83e0864ef91ea76f8d','u5a20e49a9918a96267ae41c0e13cd1c3'];
+const myBot = ['YOUR MID HERE'];
 var vx = {};var midnornama = "";var pesane = "";//DO NOT CHANGE THIS
-var banList = ['u02a0665c44d3fa83e0864ef91ea76f8d','u5ee3f8b1c2783990512a02c14d312c89'];//Banned list
+var banList = ['u02a0665c44d3fa83e0864ef91ea76f8d'];//Banned list
 var waitMsg = "no"; //DO NOT CHANGE THIS
 var msgText = "Bro.... ini tes, jangan dibales !";
-var bcText = "Masukan teks untuk broadcast";
 
 function isAdminOrBot(param) {
     return myBot.includes(param);
