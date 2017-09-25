@@ -3,9 +3,8 @@ const { Message, OpType, Location } = require('../curve-thrift/line_types');
 let exec = require('child_process').exec;
 
 const myBot = ['YOUR MID HERE'];
-var vx = {};var midnornama = "";var pesane = "";//DO NOT CHANGE THIS
+var vx = {};var midnornama = "";var pesane = "";var waitMsg = "no";//DO NOT CHANGE THIS
 var banList = ['u02a0665c44d3fa83e0864ef91ea76f8d'];//Banned list
-var waitMsg = "no"; //DO NOT CHANGE THIS
 var msgText = "Bro.... ini tes, jangan dibales !";
 
 function isAdminOrBot(param) {
