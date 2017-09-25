@@ -466,17 +466,8 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 				this._client.sendMessage(0, bang);
 			}
 		}
-		/*if(txt == "!msg" && isAdminOrBot(seq.from)){
-			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
-			    vx[0] = seq.from;vx[1] = txt;vx[3] = "nama";
-			    if(this._sendMessage(seq,"Mau kirim pesan ke siapa bos ?")){
-				console.info("a");
-				vx[2] = "arg1";waitMsg = "yes";}
-			}else{
-				waitMsg = "no";vx[0] = "";vx[1] = "";vx[2] = "";vx[3] = "";
-				this._sendMessage(seq,"#CANCELLED");
-			}
-		}else */if(txt == "!msg" && !isBanned(banList, seq.from)){
+	    
+	        if(txt == "!msg" && !isBanned(banList, seq.from)){
 			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
 			    waitMsg = "yes";
 			    vx[0] = seq.from;vx[1] = txt;vx[3] = "mid";
