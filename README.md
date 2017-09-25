@@ -22,7 +22,10 @@ Still work :construction_worker:
 ----
 **CHANGELOG**
 - Fix Some Bug
-- Improve API
+- Improve BOT
+
+**TO - DO**
+- Broadcast message to all user
 
 CMD / KEYWORD
 ------
