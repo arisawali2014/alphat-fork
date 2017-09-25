@@ -78,8 +78,6 @@ class LINE extends LineAPI {
             this.cancelAll(operation.param1);
         }
 		
-		if(operation.type == 43 || operation.type == 24 || operation.type == 15 || operation.type == 21){console.info(operation);}
-		
 		if(operation.type == 16 && this.stateStatus.salam == 1){//join group
 			let halo = new Message();
 			halo.to = operation.param1;
@@ -143,7 +141,6 @@ class LINE extends LineAPI {
 
         if(operation.type == 55){ //ada reader
 
-		    console.info(operation);
             const idx = this.checkReader.findIndex((v) => {
                 if(v.group == operation.param1) {
                     return v
