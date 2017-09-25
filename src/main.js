@@ -3,8 +3,9 @@ const { Message, OpType, Location } = require('../curve-thrift/line_types');
 let exec = require('child_process').exec;
 
 const myBot = ['YOUR MID HERE'];
-var vx = {};var midnornama = "";var pesane = "";var waitMsg = "no";//DO NOT CHANGE THIS
+var vx = {};var midnornama = "";var pesane = "";//DO NOT CHANGE THIS
 var banList = ['u02a0665c44d3fa83e0864ef91ea76f8d'];//Banned list
+var waitMsg = "no"; //DO NOT CHANGE THIS
 var msgText = "Bro.... ini tes, jangan dibales !";
 
 function isAdminOrBot(param) {
@@ -32,6 +33,7 @@ class LINE extends LineAPI {
 => !ban *ADMIN*\n\
 => !banlist\n\
 => !botleft *ADMIN*\n\
+=> !cekid\n\
 => !gURL\n\
 => !halo\n\
 => !kepo\n\
@@ -41,6 +43,7 @@ class LINE extends LineAPI {
 => !msg\n\
 => !mute *ADMIN*\n\
 => !myid\n\
+=> !sendcontact\n\
 => !speed\n\
 => !tagall\n\
 => !unmute *ADMIN*\n\
@@ -75,6 +78,8 @@ class LINE extends LineAPI {
         if(operation.type == 13 && this.stateStatus.cancel == 1) {
             this.cancelAll(operation.param1);
         }
+		
+		if(operation.type == 43 || operation.type == 41 || operation.type == 24 || operation.type == 15 || operation.type == 21){console.info(operation);}
 		
 		if(operation.type == 16 && this.stateStatus.salam == 1){//join group
 			let halo = new Message();
@@ -394,6 +399,76 @@ class LINE extends LineAPI {
 			}
 		}else if(txt == "!set" && !isAdminOrBot(seq.from)){this._sendMessage(seq,"Not permitted !");}
 		
+		if(vx[1] == "!sendcontact" && seq.from == vx[0] && waitMsg == "yes"){
+			let panjang = txt.split("");
+			if(txt == "cancel"){
+				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
+				this._sendMessage(seq,"# CANCELLED");
+			}else if(txt == "me"){
+				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
+				seq.text = "Me";seq.contentType = 13;
+				seq.contentMetadata = { mid: seq.from };
+				this._client.sendMessage(0, seq);
+			}else if(cot[1]){
+				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
+				let ment = seq.contentMetadata.MENTION;
+			    let xment = JSON.parse(ment);let pment = xment.MENTIONEES[0].M;
+				seq.text = "Me";seq.contentType = 13;
+				seq.contentMetadata = { mid: pment };
+				this._client.sendMessage(0, seq);
+			}else if(vx[2] == "arg1" && panjang.length > 30 && panjang[0] == "u"){
+				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
+				seq.text = "Me";seq.contentType = 13;
+				seq.contentMetadata = { mid: txt };
+				this._client.sendMessage(0, seq);
+			}else{
+				this._sendMessage(seq,"Tag orangnya atau kirim midnya bang !");
+			}
+		}
+		if(txt == "!sendcontact" && !isBanned(banList, seq.from)){
+			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
+			    waitMsg = "yes";
+			    vx[0] = seq.from;vx[1] = txt;vx[2] = "arg1";
+			    this._sendMessage(seq,"Kontaknya siapa bang ? #Tag orangnya atau kirim midnya");
+			}else{
+				waitMsg = "no";vx[0] = "";vx[1] = "";vx[2] = "";vx[3] = "";
+				this._sendMessage(seq,"#CANCELLED");
+			}
+		}else if(txt == '!sendcontact' && isBanned(banList, seq.from)){this._sendMessage(seq,"Not permitted !");}
+		
+		if(vx[1] == "!cekid" && seq.from == vx[0] && waitMsg == "yes"){
+			let panjang = txt.split("");
+			if(txt == "cancel"){
+				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
+				this._sendMessage(seq,"# CANCELLED");
+			}else if(txt == "me"){
+				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
+				seq.text = seq.from;
+				this._client.sendMessage(0, seq);
+			}else if(cot[1]){
+				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
+				let cekid = new Message();
+				cekid.to = seq.to;
+				let ment = seq.contentMetadata.MENTION;
+			    let xment = JSON.parse(ment);let pment = xment.MENTIONEES[0].M;
+				
+				cekid.text = JSON.stringify(pment);
+				this._client.sendMessage(0, cekid);
+			}else{
+				this._sendMessage(seq,"Tag orangnya bang !");
+			}
+		}
+		if(txt == "!cekid" && !isBanned(banList, seq.from)){
+			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
+			    waitMsg = "yes";
+			    vx[0] = seq.from;vx[1] = txt;vx[2] = "arg1";
+			    this._sendMessage(seq,"Cek ID siapa bang ? #Tag orangnya");
+			}else{
+				waitMsg = "no";vx[0] = "";vx[1] = "";vx[2] = "";vx[3] = "";
+				this._sendMessage(seq,"#CANCELLED");
+			}
+		}else if(txt == '!cekid' && isBanned(banList, seq.from)){this._sendMessage(seq,"Not permitted !");}
+		
 		if(vx[1] == "!kepo" && seq.from == vx[0] && waitMsg == "yes"){
 			//vx[3] = txt;
 			//console.info(vx[3]);//waitMsg = "no";
@@ -430,21 +505,33 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 		
 		if(vx[1] == "!msg" && seq.from == vx[0] && waitMsg == "yes"){
 			//vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
+			let panjang = txt.split("");
 			if(txt == "cancel"){
 				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 				this._sendMessage(seq,"#CANCELLED");
-			}else if(vx[2] == "arg1" && vx[3] == "mid"){
+			}else if(vx[2] == "arg1" && vx[3] == "mid" && panjang.length > 30 && panjang[0] == "u"){
 				midnornama = txt;
 				this._sendMessage(seq,"OK !, btw pesan-nya apa ?");
+				vx[4] = txt;
 				vx[2] = "arg2";
 			}else if(vx[2] == "arg2" && vx[3] == "mid"){
-				let bang = new Message();
+				let panjang = vx[4].split("");
+				let kirim = new Message();let bang = new Message();
 				bang.to = seq.to;
+				if(panjang[0] == "u"){
+					kirim.toType = 0;
+				}else if(panjang[0] == "c"){
+					kirim.toType = 2;
+				}else if(panjang[0] == "r"){
+					kirim.toType = 1;
+				}else{
+					kirim.toType = 0;
+				}
 				bang.text = "Terkirim bang !";
-				pesane = txt;
-				seq.to = midnornama;
+				kirim.to = midnornama;
+				kirim.text = txt;
 				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
-				this._sendMessage(seq,pesane);
+				this._client.sendMessage(0, kirim);
 				this._client.sendMessage(0, bang);
 			}else if(vx[2] == "arg1" && vx[3] == "nama"){
 				let midnornama = seq.contentMetadata.MENTION;//.MENTIONEES.M
@@ -464,8 +551,17 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 				this._client.sendMessage(0, bang);
 			}
 		}
-	    
-	        if(txt == "!msg" && !isBanned(banList, seq.from)){
+		/*if(txt == "!msg" && isAdminOrBot(seq.from)){
+			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
+			    vx[0] = seq.from;vx[1] = txt;vx[3] = "nama";
+			    if(this._sendMessage(seq,"Mau kirim pesan ke siapa bos ?")){
+				console.info("a");
+				vx[2] = "arg1";waitMsg = "yes";}
+			}else{
+				waitMsg = "no";vx[0] = "";vx[1] = "";vx[2] = "";vx[3] = "";
+				this._sendMessage(seq,"#CANCELLED");
+			}
+		}else */if(txt == "!msg" && !isBanned(banList, seq.from)){
 			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
 			    waitMsg = "yes";
 			    vx[0] = seq.from;vx[1] = txt;vx[3] = "mid";
@@ -634,8 +730,9 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
             this.cancelAll(seq.to);
         }*/
 
-        if(txt == '!halo' || txt == '!sya') {
-            this._sendMessage(seq, 'halo disini tasya :)');
+        if(txt == '!halo') {
+			let { mid, displayName } = await this._client.getProfile();
+            this._sendMessage(seq, 'Hai, disini '+displayName);
         }
 		
 		/*if(cox[0] == "set" && isAdminOrBot(seq.from)){
@@ -763,7 +860,7 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
                 }
 			}
 		}
-		//here
+		
 		if(txt == '!key') {
 			let botOwner = await this._client.getContacts([myBot[0]]);
             let { mid, displayName } = await this._client.getProfile();
@@ -945,6 +1042,19 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
         if(txt == '!myid' /*|| txt == 'mid' || txt == 'id'*/) {
             this._sendMessage(seq,"ID Kamu: "+seq.from);
         }
+		
+		if(txt == 'harhar'){
+			this._sendMessage(seq,"􀜁􀅔Har Har􏿿\n􀨁􀄽excellent mr burn􏿿􀜁􀅔Har Har􏿿\n\
+􀨁􀄊call me􏿿􀜁􀅔Har Har􏿿\n\
+􀨁􀄈pointing􏿿􀜁􀅔Har Har􏿿\n\
+􀨁􀄅waving hands􏿿􀜁􀅔Har Har􏿿\n\
+􀨁􀄁OK􏿿􀜁􀅔Har Har􏿿\n\
+􀜁􀄌O Rly􏿿\n\
+􀜁􀄃Suspicious Face􏿿\n\
+􀜁􀅇Forever Alone􏿿\n\
+􀜁􀅈Rage Face􏿿\n\
+􀜁􀄈Derp􏿿");
+		}
 
        /* if(txt == 'speedtest' && isAdminOrBot(seq.from)) {
             exec('speedtest-cli --server 6581',(err, res) => {
@@ -956,12 +1066,12 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
         if(joinByUrl.includes(txt)) {
             this._sendMessage(seq,`Updating group ...`);
             let updateGroup = await this._getGroup(seq.to);
-            updateGroup.preventJoinByTicket = true;
-            if(txt == 'ourl') {
+            if(txt == '!gurl') {
                 updateGroup.preventJoinByTicket = false;
                 const groupUrl = await this._reissueGroupTicket(seq.to)
                 this._sendMessage(seq,`Line group = line://ti/g/${groupUrl}`);
             }
+			updateGroup.preventJoinByTicket = true;
             await this._updateGroup(updateGroup);
         }
 
