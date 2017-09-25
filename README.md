@@ -25,7 +25,7 @@ Still work :construction_worker:
 - Improve BOT
 
 **TO - DO**
-- Broadcast message to all user
+- Broadcast message to all contact
 
 CMD / KEYWORD
 ------
