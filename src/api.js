@@ -175,6 +175,10 @@ class LineAPI {
     await this._getGroupsJoined();
     return;
   }
+  
+  _inviteIntoGroup(group,memid) {
+    return this._client.inviteIntoGroup(0,group,memid);
+  }
 
   _invite(group,member) {
     return this._client.inviteIntoGroup(0, group, member)
