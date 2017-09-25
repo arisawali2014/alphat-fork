@@ -61,11 +61,13 @@ class LINE extends LineAPI {
 
     poll(operation) {
         if(operation.type == 25 || operation.type == 26) {
+			console.info(operation.message);
             const txt = (operation.message.text !== '' && operation.message.text != null ) ? operation.message.text : '' ;
             let message = new Message(operation.message);
             this.receiverID = message.to = (operation.message.to === myBot[0]) ? operation.message.from : operation.message.to ;
             Object.assign(message,{ ct: operation.createdTime.toString() });
             if(waitMsg == "yes" && operation.message.from == vx[0] && this.stateStatus.mute != 1){
+				console.info("Wait MSG");
 				this.textMessage(txt,message,message.text)
 			}else if(this.stateStatus.mute != 1){this.textMessage(txt,message);
 			}else if(txt == "!unmute" && isAdminOrBot(operation.message.from) && this.stateStatus.mute == 1){
@@ -78,7 +80,7 @@ class LINE extends LineAPI {
             this.cancelAll(operation.param1);
         }
 		
-		if(operation.type == 43 || operation.type == 24 || operation.type == 15 || operation.type == 21){//console.info(operation);}
+		if(operation.type == 43 || operation.type == 24 || operation.type == 15 || operation.type == 21){console.info(operation);}
 		
 		if(operation.type == 16 && this.stateStatus.salam == 1){//join group
 			let halo = new Message();
@@ -143,6 +145,7 @@ class LINE extends LineAPI {
 
         if(operation.type == 55){ //ada reader
 
+		    console.info(operation);
             const idx = this.checkReader.findIndex((v) => {
                 if(v.group == operation.param1) {
                     return v
