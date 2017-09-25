@@ -29,7 +29,7 @@ Still work :construction_worker:
 
 CMD / KEYWORD
 ------
-**SEE main.js for the keyword**
+**!key for the keyword**
 
 Author
 ------
