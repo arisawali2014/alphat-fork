@@ -425,7 +425,7 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
 			    waitMsg = "yes";
 			    vx[0] = seq.from;vx[1] = txt;vx[2] = "arg1";
-			    this._sendMessage(seq,"Kepo sama siapa bos ?");
+			    this._sendMessage(seq,"Kepo sama siapa bang ?");
 			}else{
 				waitMsg = "no";vx[0] = "";vx[1] = "";vx[2] = "";vx[3] = "";
 				this._sendMessage(seq,"#CANCELLED");
