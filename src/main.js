@@ -612,11 +612,6 @@ vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
 		    console.info(orangnya);
 		}*/
 		
-		if(txt == "1123"){
-			//let orangnya = await this._client.getAllContactIds();
-			//console.info(orangnya);
-		}
-		
 		if(txt == "!mute" && isAdminOrBot(seq.from)){
 			this.stateStatus.mute = 1;
 			this._sendMessage(seq,"(*´﹃｀*)")
