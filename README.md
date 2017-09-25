@@ -29,7 +29,7 @@ Still work :construction_worker:
 
 CMD / KEYWORD
 ------
-**!key for the keyword**
+**type !key for the keyword**
 
 Author
 ------
