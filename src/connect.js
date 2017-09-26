@@ -34,6 +34,7 @@ class LineConnect extends LineAPI {
   async startx () {
     if (typeof this.authToken != 'undefined'){
       await this._tokenLogin(this.authToken, this.certificate);
+	  this._client.removeAllMessages();
       return this.longpoll();
     } else {
       return new Promise((resolve, reject) => {
