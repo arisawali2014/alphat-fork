@@ -21,8 +21,7 @@ How to ?
 Still work :construction_worker:
 ----
 **CHANGELOG**
-- Fix Some Bug
-- Improve BOT
+- Fix Chat Spam When Bot Started (Because chat session)
 
 **TO - DO**
 - Broadcast message to all contact
