@@ -4,8 +4,9 @@
   "description": "LineAlphat JS (FORK)",
   "main": "./src/main.js",
   "scripts": {
-    "start": "npm run startx",
-    "startx": "node ./src/bot.js"
+    "start": "npm run bot | npm run bot2",
+    "bot": "node ./src/bot.js",
+    "bot2": "node ./src/bot2.js"
   },
   "repository": {
     "type": "git",
