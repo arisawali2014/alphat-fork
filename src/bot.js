@@ -6,7 +6,7 @@ BotName: LINE Alphat JS\n\
 Version: FORKED VERSION\n\
 Thanks to @Alfathdirk @TCR_TEAM\n\
 =========================================\n\
-\nNOTE : This bot is made by @Alfathdirk @TCR_TEAM and has been forked by @GoogleX !\n\
+\nNOTE : This bot is made by @Alfathdirk @TCR_TEAM and has been forked by @GoogleX and @Arisawali2014 !\n\
 ***Copyright belongs to the author***");
 
 /*
@@ -15,12 +15,12 @@ Thanks to @Alfathdirk @TCR_TEAM\n\
 | Change it to your authToken & your certificate
 */
 const auth = {
- 	authToken: '',
- 	certificate: ''
+ 	authToken: 'EloYJSklOXWliORpKycc.F1/lFPvHtupEL7bw5g5uNa.FS9WFNXjdFwOEqGrsJzDtTl75B5w6iJU5SKKF+XKTQE=',
+ 	certificate: '5b55e5c83535d8a0d8a4896c89c9bcc49e443acd5cc1e89d85406764117370b5'
 }
 
-let client =  new LineConnect();
-//let client =  new LineConnect(auth);
+//let client =  new LineConnect();
+let client =  new LineConnect(auth);
 
 client.startx().then(async (res) => {
 	let ops;
